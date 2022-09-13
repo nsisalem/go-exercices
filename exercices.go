@@ -125,13 +125,36 @@ func LastIndexOf(slice []int, item int) int {
 // Ecrire une fonction qui permet de retirer un élément d'un slice
 func RemoveIndex(slice []int, index int) []int {
 
-	return []int{}
+	return append(slice[:index], slice[index+1:]...)
+}
+
+// // Ecrire une fonction qui permet de retirer la première occurence d'un élément d'un slice
+// func RemoveItem(slice []int, item int) []int {
+
+// 	return RemoveIndex(slice, IndexOf(slice, item))
+
+// }
+
+// Ecrire une fonction qui permet de retirer la première occurence d'un élément d'un slice
+func RemoveItem(slice []int, item int) []int {
+
+	index := IndexOf(slice, item)
+	result := append(slice[:index], slice[index+1:]...)
+
+	return result
+
 }
 
 // Ecrire une fonction qui permet de retirer toutes les occurences d'un élément d'un slice
-func RemoveAllIndex(slice []int, index int) []int {
+func RemoveAllItem(slice []int, item int) []int {
 
-	return []int{}
+	result := []int{}
+	for _, value := range slice {
+		if value != item {
+			result = append(result, value)
+		}
+	}
+	return result
 }
 
 // Ecrire une fonction qui découpe une chaine de caractère au niveau
@@ -187,7 +210,29 @@ func main() {
 	fmt.Println(FactRecursive(6)) // 720
 
 	x := "Hello World"
-	x[0] = byte('a')
-	fmt.Println(x[0])
+	fmt.Println(x)
+	// x[0] = byte('a') // Les string sont immutables
+
+	slice := []int{2, 5, 7, 8}
+	slice2 := []int{3, 4, 5}
+
+	slice = append(slice, 1)
+	slice = append(slice, 5, 6, 0, 57)
+	slice = append(slice, slice2...) // Elipsis
+
+	fmt.Println("slice :", slice)
+
+	fmt.Printf("Adresse de la variable slice: %p\n", &slice)
+	s := RemoveIndex(slice, 0)
+	fmt.Printf("Adresse de la variable après RemoveIndex : %p\n", &s)
+	b := RemoveItem(slice, 7)
+	fmt.Printf("Adresse de la variable après RemoveItem : %p\n", &b)
+	println()
+
+	// fmt.Println(slice)
+	// fmt.Println("RemoveItem 8: ", RemoveItem(slice, 8))
+	// fmt.Println(slice)
+	// fmt.Println("RemoveItem 6: ", RemoveItem(slice, 6))
+	// fmt.Println("RemoveAllItem 5:", RemoveAllItem(slice, 5))
 
 }
